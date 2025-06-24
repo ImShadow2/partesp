@@ -23,6 +23,20 @@ end
 -- Services
 local player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
+local menuVisible = false
+
+local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+gui.Name = "CombinedPartUI"
+gui.Enabled = menuVisible -- Start hidden
+
+UIS.InputBegan:Connect(function(input, processed)
+	if not processed and input.KeyCode == Enum.KeyCode.Insert then
+		menuVisible = not menuVisible
+		gui.Enabled = menuVisible
+	end
+end)
+
+
 local mouse = player:GetMouse()
 local camera = workspace.CurrentCamera
 
