@@ -278,22 +278,22 @@ local function isPartOfPlayerCharacter(part)
 	return false
 end
 
-local function createEntry(part, index)
+local function createEntry(part)
 	local item = Instance.new("Frame")
-	item.Size = UDim2.new(1, -8, 0, 32)
+	item.Size = UDim2.new(1, -8, 0, 40)
 	item.BackgroundColor3 = Color3.fromRGB(34, 45, 68)
 	item.BorderSizePixel = 0
 	Instance.new("UICorner", item).CornerRadius = UDim.new(0, 6)
 
 	local nameLabel = Instance.new("TextLabel", item)
-	nameLabel.Size = UDim2.new(1, -8, 1, 0)
+	nameLabel.Size = UDim2.new(1, -16, 1, 0)
 	nameLabel.Position = UDim2.new(0, 8, 0, 0)
 	nameLabel.BackgroundTransparency = 1
-	nameLabel.Text = tostring(index)..". "..part.Name
-	nameLabel.Font = Enum.Font.Gotham
+	nameLabel.Text = part.Name
+	nameLabel.Font = Enum.Font.GothamMedium
 	nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-	nameLabel.TextSize = 14
-	nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+	nameLabel.TextSize = 15
+	nameLabel.TextXAlignment = Enum.TextXAlignment.Center
 
 	local btn = Instance.new("TextButton", item)
 	btn.Size = UDim2.new(1, 0, 1, 0)
@@ -319,7 +319,7 @@ local function populateParts(filter)
 	for _, v in ipairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") and not isPartOfPlayerCharacter(v) and (filter == "" or v.Name:lower():find(filter:lower())) then
 			count = count + 1
-			local entry = createEntry(v, count)
+			local entry = createEntry(v)
 			entry.Parent = scroll
 		end
 	end
