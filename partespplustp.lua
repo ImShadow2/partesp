@@ -30,13 +30,30 @@ gui.Name = "CombinedPartUI"
 gui.Parent = game:GetService("CoreGui")
 gui.Enabled = false
 
+-- Notification for UI hidden
+local notifyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+notifyGui.Name = "InsertNotify"
+
+local notifyLabel = Instance.new("TextLabel", notifyGui)
+notifyLabel.Size = UDim2.new(0, 250, 0, 30)
+notifyLabel.Position = UDim2.new(0.5, -125, 1, -60) -- Bottom center
+notifyLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+notifyLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+notifyLabel.Text = "UI Hidden — Press Insert to Open"
+notifyLabel.TextSize = 14
+notifyLabel.Font = Enum.Font.Gotham
+notifyLabel.Visible = false
+notifyLabel.BorderSizePixel = 0
+Instance.new("UICorner", notifyLabel).CornerRadius = UDim.new(0, 6)
 
 UIS.InputBegan:Connect(function(input, processed)
 	if not processed and input.KeyCode == Enum.KeyCode.Insert then
 		menuVisible = not menuVisible
 		gui.Enabled = menuVisible
+		notifyLabel.Visible = not menuVisible
 	end
 end)
+
 
 
 local mouse = player:GetMouse()
