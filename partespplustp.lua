@@ -25,9 +25,11 @@ local player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
 local menuVisible = false
 
-local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+local gui = Instance.new("ScreenGui")
 gui.Name = "CombinedPartUI"
-gui.Enabled = menuVisible -- Start hidden
+gui.Parent = game:GetService("CoreGui")
+gui.Enabled = false
+
 
 UIS.InputBegan:Connect(function(input, processed)
 	if not processed and input.KeyCode == Enum.KeyCode.Insert then
@@ -41,8 +43,6 @@ local mouse = player:GetMouse()
 local camera = workspace.CurrentCamera
 
 -- Create Main GUI
-local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
-gui.Name = "CombinedPartUI"
 
 local mainFrame = Instance.new("Frame", gui)
 mainFrame.Size = UDim2.new(0, 400, 0, 500)
