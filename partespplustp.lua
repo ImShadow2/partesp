@@ -30,30 +30,13 @@ gui.Name = "CombinedPartUI"
 gui.Parent = game:GetService("CoreGui")
 gui.Enabled = false
 
--- Notification for UI hidden
-local notifyGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
-notifyGui.Name = "InsertNotify"
-
-local notifyLabel = Instance.new("TextLabel", notifyGui)
-notifyLabel.Size = UDim2.new(0, 250, 0, 30)
-notifyLabel.Position = UDim2.new(0.5, -125, 1, -60) -- Bottom center
-notifyLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-notifyLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-notifyLabel.Text = "UI Hidden — Press Insert to Open"
-notifyLabel.TextSize = 14
-notifyLabel.Font = Enum.Font.Gotham
-notifyLabel.Visible = false
-notifyLabel.BorderSizePixel = 0
-Instance.new("UICorner", notifyLabel).CornerRadius = UDim.new(0, 6)
 
 UIS.InputBegan:Connect(function(input, processed)
 	if not processed and input.KeyCode == Enum.KeyCode.Insert then
 		menuVisible = not menuVisible
 		gui.Enabled = menuVisible
-		notifyLabel.Visible = not menuVisible
 	end
 end)
-
 
 
 local mouse = player:GetMouse()
@@ -295,22 +278,22 @@ local function isPartOfPlayerCharacter(part)
 	return false
 end
 
-local function createEntry(part)
+local function createEntry(part, index)
 	local item = Instance.new("Frame")
-	item.Size = UDim2.new(1, -8, 0, 40)
+	item.Size = UDim2.new(1, -8, 0, 32)
 	item.BackgroundColor3 = Color3.fromRGB(34, 45, 68)
 	item.BorderSizePixel = 0
 	Instance.new("UICorner", item).CornerRadius = UDim.new(0, 6)
 
 	local nameLabel = Instance.new("TextLabel", item)
-	nameLabel.Size = UDim2.new(1, -16, 1, 0)
+	nameLabel.Size = UDim2.new(1, -8, 1, 0)
 	nameLabel.Position = UDim2.new(0, 8, 0, 0)
 	nameLabel.BackgroundTransparency = 1
-	nameLabel.Text = part.Name
-	nameLabel.Font = Enum.Font.GothamMedium
+	nameLabel.Text = tostring(index)..". "..part.Name
+	nameLabel.Font = Enum.Font.Gotham
 	nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-	nameLabel.TextSize = 15
-	nameLabel.TextXAlignment = Enum.TextXAlignment.Center
+	nameLabel.TextSize = 14
+	nameLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 	local btn = Instance.new("TextButton", item)
 	btn.Size = UDim2.new(1, 0, 1, 0)
@@ -336,7 +319,7 @@ local function populateParts(filter)
 	for _, v in ipairs(workspace:GetDescendants()) do
 		if v:IsA("BasePart") and not isPartOfPlayerCharacter(v) and (filter == "" or v.Name:lower():find(filter:lower())) then
 			count = count + 1
-			local entry = createEntry(v)
+			local entry = createEntry(v, count)
 			entry.Parent = scroll
 		end
 	end
